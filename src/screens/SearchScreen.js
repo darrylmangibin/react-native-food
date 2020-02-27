@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, ScrollView } from "react-native";
 import useResults from "../hooks/useResults";
 
 import SearchBar from "../components/SearchBar";
@@ -11,22 +11,33 @@ const SearchScreen = () => {
 
 	const filterResultsByPrice = price => {
 		// ₱₱₱
-		return results.filter(result => result.price === price)
+		return results.filter(result => result.price === price);
 	};
 
 	return (
-		<View>
+		<>
 			<SearchBar
 				term={term}
 				onTermChange={setTerm}
 				onTermSubmit={() => searchApi(term)}
 			/>
 			{errorMessage ? <Text>{errorMessage}</Text> : null}
-			<ResultsList results={filterResultsByPrice("₱")} title="Cost Effective" />
-			<ResultsList results={filterResultsByPrice("₱₱")} title="Bit Pricier" />
-			<ResultsList results={filterResultsByPrice("₱₱₱")} title="Big Spender" />
-			<ResultsList results={filterResultsByPrice("₱₱₱₱")} title="Big Spender" />
-		</View>
+			<ScrollView>
+				<ResultsList
+					results={filterResultsByPrice("₱")}
+					title="Cost Effective"
+				/>
+				<ResultsList results={filterResultsByPrice("₱₱")} title="Bit Pricier" />
+				<ResultsList
+					results={filterResultsByPrice("₱₱₱")}
+					title="Big Spender"
+				/>
+				<ResultsList
+					results={filterResultsByPrice("₱₱₱₱")}
+					title="Big Spender"
+				/>
+			</ScrollView>
+		</>
 	);
 };
 
